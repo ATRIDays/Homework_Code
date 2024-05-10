@@ -4,7 +4,7 @@ import re
 import csv
 
 
-def analysis(url):
+def analysis(url, area):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) \
         Chrome/124.0.0.0 \Safari/537.36'
@@ -14,7 +14,7 @@ def analysis(url):
     soup = BeautifulSoup(content, 'lxml')
     divs = soup.select(".sellListContent li .info")
 
-    with open('二手房信息.csv', mode='a', encoding='utf-8', newline='') as f:
+    with open(f"./Data/二手房信息{area}.csv", mode='a', encoding='utf-8', newline='') as f:
         csv_writer = csv.DictWriter(f, fieldnames=['标题', '小区', '区域', '总价', '单价', '户型', '面积', '朝向',
                                                    '装修情况', '楼层类别', '总层数', '建筑类型'])
 
@@ -76,5 +76,5 @@ def analysis(url):
             }
 
             csv_writer.writerow(house_dict)
-
+        print(f"{url}解析成功({area})")
 
